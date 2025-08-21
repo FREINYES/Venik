@@ -9,9 +9,7 @@ import net.minecraft.block.Block;
 
 public class Venik extends Item {
 
-    public Venik(Settings settings) {
-        super(settings);
-    }
+    public Venik(Settings settings) {super(settings);}
 
     // ПКМ по блоку → чистимо сніг
     @Override
@@ -19,11 +17,11 @@ public class Venik extends Item {
         World world = context.getWorld();
         Block block = world.getBlockState(context.getBlockPos()).getBlock();
 
-        if (!world.isClient) {
-            if (block == Blocks.SNOW || block == Blocks.SNOW_BLOCK) {
-                world.breakBlock(context.getBlockPos(), false); // чистимо без дропа
-                return ActionResult.SUCCESS;
-            }
+        if (world.isClient)
+            return super.useOnBlock(context);
+        if (block == Blocks.SNOW || block == Blocks.SNOW_BLOCK) {
+            world.breakBlock(context.getBlockPos(), false); // чистимо без дропа
+            return ActionResult.SUCCESS;
         }
         return super.useOnBlock(context);
     }

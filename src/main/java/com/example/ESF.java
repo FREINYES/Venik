@@ -15,11 +15,12 @@ public class ESF implements ModInitializer {
     public static final String MOD_ID = "esf";
 
     // Вкладка предметів мода
-    public static final RegistryKey<ItemGroup> ESF_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP,
+    private static final RegistryKey<ItemGroup> ESF_GROUP = RegistryKey.of(RegistryKeys.ITEM_GROUP,
             Identifier.of(MOD_ID, "group"));
 
     // Сам веник
-    public static final Item VENIK = register("venik", new Venik(new Item.Settings().maxCount(1)));
+    private static final Venik VENIK = Registry.register(Registries.ITEM, Identifier.of("esf:venik"),
+            new Venik(new Item.Settings().maxCount(1)));
 
     @Override
     public void onInitialize() {
@@ -28,9 +29,5 @@ public class ESF implements ModInitializer {
                 .displayName(Text.translatable("itemGroup." + MOD_ID + ".group"))
                 .icon(() -> new ItemStack(VENIK))
                 .entries((context, entries) -> {entries.add(VENIK);}).build());
-    }
-
-    private static Item register(String name, Item item) {
-        return Registry.register(Registries.ITEM, Identifier.of(MOD_ID, name), item);
     }
 }
